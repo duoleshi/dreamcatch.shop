@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DreamCatch - Addictive 4x4 Minesweeper Game | Challenge Your Mind</title>
-    <meta name="description" content="Play DreamCatch, an engaging 4x4 minesweeper puzzle game that tests your logic and strategy. Avoid the mines and clear the grid to win!">
+    <title>DreamCatch - Challenging 10x10 Minesweeper Game | Test Your Strategic Skills</title>
+    <meta name="description" content="Play DreamCatch, an addictive 10x10 minesweeper puzzle that challenges your logical thinking. Navigate through the minefield and uncover all safe cells to win!">
     <link rel="canonical" href="https://dreamcatch.shop">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -23,30 +23,30 @@
                             green: '#34C759',
                             teal: '#5AC8FA',
                             gray: '#8E8E93',
-                            lightGray: '#F2F2F7',
-                            darkGray: '#1C1C1E'
+                            lightBg: '#F2F2F7',
+                            darkBg: '#1C1C1E'
                         }
-                    },
-                    fontFamily: {
-                        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif']
                     }
                 }
             }
         }
     </script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap');
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: #F2F2F7;
         }
         
-        .game-container {
+        .game-shadow {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
         
-        .game-container:hover {
+        .game-shadow:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
         }
         
         .feature-card {
@@ -55,86 +55,87 @@
         
         .feature-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
         }
         
-        .minesweeper-cell {
+        /* Minesweeper Game Styles */
+        .minesweeper-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 2px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .mine-cell {
             aspect-ratio: 1/1;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            user-select: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 1.25rem;
-        }
-        
-        .minesweeper-cell:hover:not(.revealed) {
             background-color: #E5E5EA;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.15s ease;
         }
         
-        .minesweeper-cell.revealed {
+        .mine-cell:hover:not(.revealed) {
+            background-color: #D1D1D6;
+        }
+        
+        .mine-cell.revealed {
             background-color: #FFFFFF;
-            border: 1px solid #D1D1D6;
+            border: 1px solid #E5E5EA;
         }
         
-        .minesweeper-cell.mine {
+        .mine-cell.mine {
             background-color: #FF3B30;
             color: white;
         }
         
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            max-width: 320px;
-            margin: 0 auto;
-        }
-        
-        /* Custom number colors */
-        .number-1 { color: #007AFF; }
-        .number-2 { color: #34C759; }
-        .number-3 { color: #FF3B30; }
-        .number-4 { color: #5856D6; }
-        .number-5 { color: #FF9500; }
-        .number-6 { color: #5AC8FA; }
-        .number-7 { color: #AF52DE; }
-        .number-8 { color: #FF2D55; }
+        /* Number colors */
+        .num-1 { color: #007AFF; } /* blue */
+        .num-2 { color: #34C759; } /* green */
+        .num-3 { color: #FF3B30; } /* red */
+        .num-4 { color: #5856D6; } /* indigo */
+        .num-5 { color: #FF9500; } /* orange */
+        .num-6 { color: #5AC8FA; } /* teal */
+        .num-7 { color: #AF52DE; } /* purple */
+        .num-8 { color: #FF2D55; } /* pink */
     </style>
 </head>
-<body class="bg-apple-lightGray text-gray-900">
+<body>
     <header class="bg-white shadow-sm sticky top-0 z-10">
-        <div class="container mx-auto px-4 py-4 md:py-6 flex flex-col md:flex-row justify-between items-center">
-            <a href="/" class="flex items-center mb-4 md:mb-0">
+        <nav class="container mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between">
+            <a href="/" class="flex items-center mb-3 md:mb-0">
                 <span class="text-2xl font-bold text-apple-blue">DreamCatch</span>
             </a>
-            <nav class="flex items-center space-x-8">
-                <a href="#game" class="text-gray-700 hover:text-apple-blue transition-colors duration-200">Play</a>
-                <a href="#features" class="text-gray-700 hover:text-apple-blue transition-colors duration-200">Features</a>
-                <a href="#how-to-play" class="text-gray-700 hover:text-apple-blue transition-colors duration-200">How to Play</a>
-                <a href="#about" class="text-gray-700 hover:text-apple-blue transition-colors duration-200">About</a>
-            </nav>
-        </div>
+            <ul class="flex space-x-8">
+                <li><a href="#play" class="text-gray-700 hover:text-apple-blue transition-colors duration-200">Play</a></li>
+                <li><a href="#features" class="text-gray-700 hover:text-apple-blue transition-colors duration-200">Features</a></li>
+                <li><a href="#instructions" class="text-gray-700 hover:text-apple-blue transition-colors duration-200">How To Play</a></li>
+                <li><a href="#about" class="text-gray-700 hover:text-apple-blue transition-colors duration-200">About</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main class="container mx-auto px-4 py-8">
         <!-- Hero Section -->
         <section class="text-center mb-16">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-apple-blue">DreamCatch: The Ultimate 4x4 Minesweeper Challenge</h1>
-            <p class="text-xl mb-8 text-gray-600 max-w-3xl mx-auto">
-                A thrilling minesweeper game that tests your logic skills. Navigate the 4x4 grid, avoid mines, and use strategic thinking to emerge victorious!
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-apple-blue">DreamCatch: Master the 10x10 Minesweeper Challenge</h1>
+            <p class="text-xl md:text-2xl mb-10 text-gray-600 max-w-3xl mx-auto">
+                A thrilling minesweeper game that tests your logic skills. Navigate the 10x10 grid, avoid mines, and clear the board to win!
             </p>
             
             <!-- Game Section -->
-            <div id="game" class="game-container bg-white rounded-2xl p-6 md:p-8 max-w-4xl mx-auto">
+            <div id="play" class="game-shadow bg-white rounded-2xl p-6 md:p-8 max-w-4xl mx-auto mb-16">
                 <iframe 
                     src="https://cloud.onlineqamess.io/games/2025/unity/dream-catch/index-og.html" 
-                    title="Play DreamCatch Minesweeper Game Online" 
-                    class="w-full rounded-lg border-0 shadow-sm bg-gray-100"
-                    style="height: 520px; max-height: 80vh;">
+                    title="Play DreamCatch Minesweeper Game" 
+                    class="w-full rounded-lg border-0 shadow-sm"
+                    style="height: 600px; max-height: 80vh;">
                 </iframe>
-                <div class="mt-4 text-sm text-gray-500">
+                <div class="mt-6 text-sm text-gray-500">
                     Having trouble loading the game? Try refreshing your browser or check your internet connection.
                 </div>
             </div>
@@ -142,82 +143,82 @@
 
         <!-- Features Section -->
         <section id="features" class="mb-16">
-            <h2 class="text-3xl font-bold mb-8 text-center text-apple-blue">Game Features</h2>
+            <h2 class="text-3xl font-bold mb-10 text-center text-apple-blue">Game Features</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="feature-card bg-white p-6 rounded-xl shadow">
-                    <div class="flex items-center justify-center w-12 h-12 rounded-full bg-apple-blue bg-opacity-10 mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-apple-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="flex items-center justify-center w-14 h-14 rounded-full bg-apple-blue bg-opacity-10 mb-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-apple-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Strategic Gameplay</h3>
+                    <h3 class="text-xl font-semibold mb-3">Expansive 10x10 Grid</h3>
                     <p class="text-gray-600">
-                        Test your logic and deduction skills with our compact 4x4 grid. Each move matters in this concentrated version of the classic minesweeper game.
+                        Enjoy an immersive gaming experience with our spacious 10x10 grid, providing the perfect balance of challenge and playability for minesweeper enthusiasts.
                     </p>
                 </div>
                 <div class="feature-card bg-white p-6 rounded-xl shadow">
-                    <div class="flex items-center justify-center w-12 h-12 rounded-full bg-apple-red bg-opacity-10 mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-apple-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="flex items-center justify-center w-14 h-14 rounded-full bg-apple-red bg-opacity-10 mb-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-apple-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Hidden Challenges</h3>
+                    <h3 class="text-xl font-semibold mb-3">Strategic Mine Placement</h3>
                     <p class="text-gray-600">
-                        Navigate around three randomly placed mines. Each game offers a unique challenge with different mine placements to keep you on your toes.
+                        Three hidden mines are randomly distributed across the board, creating a unique challenge every time you play and keeping you on your toes.
                     </p>
                 </div>
                 <div class="feature-card bg-white p-6 rounded-xl shadow">
-                    <div class="flex items-center justify-center w-12 h-12 rounded-full bg-apple-green bg-opacity-10 mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-apple-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div class="flex items-center justify-center w-14 h-14 rounded-full bg-apple-green bg-opacity-10 mb-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-apple-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Quick Sessions</h3>
+                    <h3 class="text-xl font-semibold mb-3">Logical Deduction</h3>
                     <p class="text-gray-600">
-                        Perfect for short gaming breaks. With our compact grid design, each game is quick yet challenging, fitting perfectly into your busy schedule.
+                        Test your reasoning skills as you analyze number clues that indicate nearby mines. Use strategy and logic to safely clear the entire board.
                     </p>
                 </div>
             </div>
         </section>
 
         <!-- How to Play Section -->
-        <section id="how-to-play" class="mb-16">
-            <h2 class="text-3xl font-bold mb-8 text-center text-apple-blue">How to Play</h2>
+        <section id="instructions" class="mb-16">
+            <h2 class="text-3xl font-bold mb-10 text-center text-apple-blue">How to Play</h2>
             <div class="bg-white p-8 rounded-xl shadow max-w-4xl mx-auto">
                 <ol class="space-y-6">
-                    <li class="flex items-start">
+                    <li class="flex">
                         <div class="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-apple-blue text-white font-bold mr-4">1</div>
                         <div>
-                            <h3 class="text-xl font-semibold mb-1">Objective</h3>
+                            <h3 class="text-xl font-semibold mb-2">Game Objective</h3>
                             <p class="text-gray-600">
-                                The goal is to uncover all 13 safe cells without clicking on any of the 3 hidden mines. Use logic and deduction to determine where the mines are located.
+                                Your goal is to uncover all 97 safe cells without clicking on any of the 3 hidden mines. Use numbers as clues to deduce where mines are located.
                             </p>
                         </div>
                     </li>
-                    <li class="flex items-start">
+                    <li class="flex">
                         <div class="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-apple-blue text-white font-bold mr-4">2</div>
                         <div>
-                            <h3 class="text-xl font-semibold mb-1">Game Mechanics</h3>
+                            <h3 class="text-xl font-semibold mb-2">Cell Interaction</h3>
                             <p class="text-gray-600">
-                                Left-click on cells to reveal what's underneath. If you click on a mine, the game ends. If you click on a safe cell, a number appears showing how many mines are in the adjacent cells.
+                                Left-click on a cell to reveal what's underneath. If it's a mine, the game ends. If it's safe, a number appears showing how many mines are in the adjacent cells.
                             </p>
                         </div>
                     </li>
-                    <li class="flex items-start">
+                    <li class="flex">
                         <div class="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-apple-blue text-white font-bold mr-4">3</div>
                         <div>
-                            <h3 class="text-xl font-semibold mb-1">Reading the Numbers</h3>
+                            <h3 class="text-xl font-semibold mb-2">Understanding Numbers</h3>
                             <p class="text-gray-600">
-                                Numbers indicate how many mines are in the surrounding 8 cells (fewer for edge cells). Use these numbers to make logical deductions about where mines are located.
+                                The numbers indicate how many mines are in the surrounding eight cells (fewer for edge cells). For example, if a cell shows "2", that means two of the adjacent cells contain mines.
                             </p>
                         </div>
                     </li>
-                    <li class="flex items-start">
+                    <li class="flex">
                         <div class="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-apple-blue text-white font-bold mr-4">4</div>
                         <div>
-                            <h3 class="text-xl font-semibold mb-1">Winning the Game</h3>
+                            <h3 class="text-xl font-semibold mb-2">Winning Strategy</h3>
                             <p class="text-gray-600">
-                                Successfully reveal all cells except those containing mines to win. The challenge is to use the numerical clues to safely navigate the grid.
+                                Use logic to determine which cells are safe to click. When all safe cells are revealed, you win! The key is to make educated guesses based on the number clues provided.
                             </p>
                         </div>
                     </li>
@@ -227,43 +228,46 @@
 
         <!-- About Section -->
         <section id="about" class="mb-16">
-            <h2 class="text-3xl font-bold mb-8 text-center text-apple-blue">About DreamCatch</h2>
+            <h2 class="text-3xl font-bold mb-10 text-center text-apple-blue">About DreamCatch</h2>
             <div class="bg-white p-8 rounded-xl shadow max-w-4xl mx-auto">
-                <p class="text-gray-600 mb-4">
-                    DreamCatch is a modern take on the classic minesweeper game, designed to provide a quick yet challenging experience. Our 4x4 grid format offers a perfect balance between accessibility and difficulty, making it suitable for both casual players and puzzle enthusiasts.
+                <p class="text-gray-600 mb-5">
+                    DreamCatch is a modern reimagining of the classic minesweeper game, designed to provide both challenge and entertainment. Our expansive 10x10 grid offers a perfect playground for testing your logical reasoning and deduction skills.
                 </p>
-                <p class="text-gray-600 mb-4">
-                    The game features three randomly placed mines across a 16-cell grid, creating a different challenge each time you play. As you reveal safe cells, numbers appear indicating how many mines are in the adjacent cells, helping you make informed decisions about where to click next.
+                <p class="text-gray-600 mb-5">
+                    What sets DreamCatch apart is its perfect balance of difficulty. With just three mines hidden among 100 cells, the game is accessible to newcomers while still providing a stimulating challenge for experienced players. Each game creates a unique puzzle as mines are randomly distributed across the board.
                 </p>
                 <p class="text-gray-600">
-                    DreamCatch is the perfect brain exercise for short breaks or moments when you want to challenge your logical thinking. Its simple interface belies the strategic depth involved in successfully navigating the minefield. Are you ready to test your skills and see if you can clear the board without triggering any mines?
+                    Whether you're looking to sharpen your mind with a quick brain teaser or settle in for a longer strategic session, DreamCatch delivers an engaging experience that will keep you coming back for "just one more game." Can you master the minefield and emerge victorious?
                 </p>
             </div>
         </section>
 
         <!-- Interactive Demo Section -->
         <section class="mb-16">
-            <h2 class="text-3xl font-bold mb-8 text-center text-apple-blue">Try Our Interactive Demo</h2>
-            <div class="bg-white p-8 rounded-xl shadow max-w-lg mx-auto">
-                <div id="minesweeper-game" class="mb-6">
-                    <div class="grid-container" id="minesweeper-grid"></div>
+            <h2 class="text-3xl font-bold mb-10 text-center text-apple-blue">Try Our Minesweeper Demo</h2>
+            <div class="bg-white p-6 rounded-xl shadow max-w-2xl mx-auto">
+                <div id="minesweeper-demo" class="mb-6">
+                    <div class="minesweeper-grid" id="minesweeper-grid"></div>
                 </div>
-                <div class="flex justify-center space-x-4">
-                    <button id="new-game" class="px-6 py-2 bg-apple-blue text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-apple-blue focus:ring-opacity-50">
+                <div class="flex justify-center mt-6 mb-2">
+                    <button id="new-game-btn" class="px-6 py-3 bg-apple-blue text-white font-medium rounded-lg hover:bg-blue-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-apple-blue">
                         New Game
                     </button>
                 </div>
                 <div id="game-status" class="mt-4 text-center font-semibold"></div>
+                <div class="mt-4 text-sm text-gray-500 text-center">
+                    Click on cells to reveal them. Avoid the 3 hidden mines!
+                </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-white py-8 border-t border-gray-200">
+    <footer class="bg-white border-t border-gray-200 mt-10 py-8">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
+                <div class="mb-6 md:mb-0">
                     <div class="text-xl font-bold text-apple-blue">DreamCatch</div>
-                    <p class="text-gray-600 mt-1">© 2025 DreamCatch. All rights reserved.</p>
+                    <p class="text-gray-600 mt-2">© 2025 DreamCatch. All rights reserved.</p>
                 </div>
                 <div class="flex space-x-6">
                     <a href="#" class="text-gray-600 hover:text-apple-blue transition-colors duration-200">Privacy Policy</a>
@@ -278,26 +282,26 @@
         document.addEventListener('DOMContentLoaded', function() {
             const grid = document.getElementById('minesweeper-grid');
             const statusDisplay = document.getElementById('game-status');
-            const newGameButton = document.getElementById('new-game');
+            const newGameBtn = document.getElementById('new-game-btn');
             
             // Game configuration
-            const GRID_SIZE = 4;
+            const GRID_SIZE = 10;
             const MINE_COUNT = 3;
             let cells = [];
             let mines = [];
             let revealedCount = 0;
             let gameOver = false;
             
-            // Initialize the game
+            // Initialize game
             function initGame() {
-                // Reset variables
+                // Reset game state
+                grid.innerHTML = '';
                 cells = [];
                 mines = [];
                 revealedCount = 0;
                 gameOver = false;
                 statusDisplay.textContent = '';
                 statusDisplay.className = 'mt-4 text-center font-semibold';
-                grid.innerHTML = '';
                 
                 // Generate random mine positions
                 while (mines.length < MINE_COUNT) {
@@ -310,7 +314,7 @@
                 // Create grid cells
                 for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
                     const cell = document.createElement('div');
-                    cell.className = 'minesweeper-cell bg-gray-100 border border-gray-200 rounded-md';
+                    cell.className = 'mine-cell';
                     cell.dataset.index = i;
                     
                     cell.addEventListener('click', () => {
@@ -331,12 +335,12 @@
                             
                             if (mineCount > 0) {
                                 cell.textContent = mineCount;
-                                cell.classList.add(`number-${mineCount}`);
+                                cell.classList.add(`num-${mineCount}`);
                             }
                             
                             revealedCount++;
                             
-                            // Check if player won
+                            // Check for win
                             if (revealedCount === (GRID_SIZE * GRID_SIZE) - MINE_COUNT) {
                                 revealAllMines();
                                 gameOver = true;
@@ -351,13 +355,13 @@
                 }
             }
             
-            // Count mines in adjacent cells
+            // Count adjacent mines for a cell
             function countAdjacentMines(index) {
                 const row = Math.floor(index / GRID_SIZE);
                 const col = index % GRID_SIZE;
                 let count = 0;
                 
-                // Check all 8 adjacent cells
+                // Check all 8 surrounding cells
                 for (let r = Math.max(0, row - 1); r <= Math.min(GRID_SIZE - 1, row + 1); r++) {
                     for (let c = Math.max(0, col - 1); c <= Math.min(GRID_SIZE - 1, col + 1); c++) {
                         const adjIndex = r * GRID_SIZE + c;
@@ -373,18 +377,17 @@
             // Reveal all mines at game end
             function revealAllMines() {
                 mines.forEach(mineIndex => {
-                    const cell = cells[mineIndex];
-                    if (!cell.classList.contains('revealed')) {
-                        cell.textContent = '💣';
-                        cell.classList.add('mine', 'revealed');
+                    if (!cells[mineIndex].classList.contains('revealed')) {
+                        cells[mineIndex].textContent = '💣';
+                        cells[mineIndex].classList.add('mine', 'revealed');
                     }
                 });
             }
             
-            // New game button handler
-            newGameButton.addEventListener('click', initGame);
+            // Start new game
+            newGameBtn.addEventListener('click', initGame);
             
-            // Initialize the game on page load
+            // Initialize game on page load
             initGame();
         });
     </script>
